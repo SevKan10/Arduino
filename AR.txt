@@ -1,0 +1,4 @@
+C:\Users\<username>\.arduinoIDE\arduino-cli.yaml
+network:
+  proxy: http://pippo:pluto@example.com:1234/
+  user_agent_ext: daemon
