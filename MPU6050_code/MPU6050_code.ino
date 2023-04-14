@@ -1,8 +1,13 @@
 #include <MPU6050_tockn.h>
 #include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
 MPU6050 mpu6050(Wire);
+LiquidCrystal_I2C lcd (0x27,16,2);
 
 void setup() {
+  lcd.init();
+  lcd.backlight();
   Serial.begin(9600);
   Wire.begin();
   mpu6050.begin();
@@ -23,5 +28,6 @@ void loop()
   {
     Serial.println("xe bi nga ");
   }
-
+    lcd.setCursor(0,0);
+    lcd.print("y: ");lcd.print(y);
 }
