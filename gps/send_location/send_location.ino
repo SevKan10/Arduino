@@ -1,9 +1,9 @@
 #include <TinyGPS++.h>  
 #include <SoftwareSerial.h>  
 TinyGPSPlus gps;
-#define S_RX 8  
-#define S_TX 9  
-SoftwareSerial SoftSerial(S_RX, S_TX);  
+#define RX 8  
+#define TX 9  
+SoftwareSerial SoftSerial(RX, TX);  
 void setup(void) 
 {
   Serial.begin(9600);
@@ -34,14 +34,9 @@ void loop()
         Serial.println("Satellites Invalid");
       }  }
       String url = "http://maps.google.com/maps?q=loc:";
-      url = url + String(gps.location.lat(), DEC) + "," + String(gps.location.lng(), DEC);
+      url = url + String(gps.location.lat(), 6) + "," + String(gps.location.lng(), 6);
       {
-      Serial.println(url);
-      }
-    // Serial.print("Google Maps URL: https://www.google.com/maps/place/");
-    // Serial.print(gps.location.lat(), 7);
-    // Serial.print(",");
-    // Serial.println(gps.location.lng(), 7);
- 
+      //Serial.println(url);
+      } 
 }
 // Code by SevKan

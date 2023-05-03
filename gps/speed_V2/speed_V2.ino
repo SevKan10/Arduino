@@ -5,7 +5,7 @@
 LiquidCrystal_I2C display(0x27,16,2);
 TinyGPSPlus gps;
 #define S_RX    8                
-#define S_TX    9                
+#define S_TX    9        
 SoftwareSerial SoftSerial(S_RX, S_TX);  
 void setup()
 {
@@ -15,7 +15,7 @@ void setup()
   SoftSerial.begin(9600); 
 }
  
-void loop()
+void loop(void)
 {
   boolean newData = false;
   for (unsigned long start = millis(); millis() - start < 300;)
@@ -35,7 +35,6 @@ void loop()
     newData = false; 
     (gps.location.isValid() == 1);
     {
-      //String gps_speed = String(gps.speed.kmph());
       display.setCursor(0, 0);
       display.print(gps.speed.kmph());
       delay(100);
@@ -49,15 +48,12 @@ void loop()
       delay(100);
       Serial.print("Sat ");
       Serial.println(gps.satellites.value());
-     
     }
   }
  
   else
   {
-    display.setCursor(0, 0);
-    display.print("No Data");
-    display.clear();
+    
   }
 }
 //Code by SevKan

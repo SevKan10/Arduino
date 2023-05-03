@@ -1,4 +1,3 @@
-// Interfacing Arduino with NEO-6M GPS module
 
 #include <TinyGPS++.h>           // Include TinyGPS++ library
 
@@ -21,7 +20,7 @@ void setup(void) {
 }
 
 void loop() {
-   String url =" http://maps.google.com/maps?q=loc:" ;
+   String url = http://maps.google.com/maps?q=loc:
   
   while (SoftSerial.available() > 0) {
 
