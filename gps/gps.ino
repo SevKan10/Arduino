@@ -20,7 +20,6 @@ void setup(void) {
 }
 
 void loop() {
-   String url = http://maps.google.com/maps?q=loc:
   
   while (SoftSerial.available() > 0) {
 
