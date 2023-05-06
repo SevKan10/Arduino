@@ -48,6 +48,8 @@ void loop(void)
       delay(100);
       Serial.print("Sat ");
       Serial.println(gps.satellites.value());
+      delay(5000);
+      display.clear();
     }
   }
  
