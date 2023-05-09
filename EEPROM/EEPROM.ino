@@ -1,47 +1,58 @@
 
 #include <EEPROM.h>
-int addr = 0;//địa chỉ EEPROM mà ta sẽ lưu đầu tiên
+int addr = 0;  //địa chỉ EEPROM mà ta sẽ lưu đầu tiên
 
-void setup()
-{
+#include <TinyGPS++.h>  // Include TinyGPS++ library
+
+#include <SoftwareSerial.h>  // Include software serial library
+
+TinyGPSPlus gps;
+
+#define S_RX 8  // Define software serial RX pin
+
+#define S_TX 9  // Define software serial TX pin
+int Lat, Lng = 0;
+String lt, lg;
+SoftwareSerial SoftSerial(S_RX, S_TX);
+void setup(void) {
+
+  Serial.begin(9600);
+
+  SoftSerial.begin(9600);
 }
 
-void loop()
-{
-  // cần phải chia giá trị của hàm analogRead cho 4
-  // vì hàm analogRead trả về giá trị từ 0-1023 mà 
-  // giá trị được lưu trong EEPROM chỉ từ 0-255 mà thôi
-  int val = analogRead(0) / 4;
- 
-  // lưu giá trị vào ô nhớ addr của EEPROM.
-  // Giá trị này sẽ được lưu giữ và vẫn còn đó
-  // khi tắt Arduino
-  EEPROM.write(addr, val);
- 
-  // Tăng giá trị ô nhớ lên 1
-  addr = addr + 1;
- 
-  // chúng ta chỉ có 512 ô nhớ (số thứ tự từ 0-511)
-  // nên khi addr (số thứ tự) == 512 thì ta quay về 
-  // thứ tự là 0
-  if (addr == 512)
-    addr = 0;
- 
-  delay(5); // delay 5ms để trước khi lưu giá trị tiếp theo
+void loop() {
+
+
+
+  while (SoftSerial.available() > 0) {
+
+    if (gps.encode(SoftSerial.read())) {
+
+      if (gps.location.lat() == 0) {
+        Lat = lt.toInt();
+        Lng = lg.toInt();
+      }
+      if (gps.location.lat() != 0) {
+
+        //Serial.print("Latitude   = ");
+
+        //Serial.println(gps.location.lat(), 6);
+        EEPROM.write(Lat, (gps.location.lat(), 6));
+        Lat++;
+        if (Lat == 512)
+          Lat = 0;
+        delay(5);
+        Serial.print(Lat);
+
+        Serial.println(gps.location.lng(), 6);
+        EEPROM.write(Lng, (gps.location.lng(), 6));
+                Serial.print(Lng);
+        Lng++;
+        if (Lng == 512)
+          Lng = 0;
+        delay(5);
+      }
+    }
+  }  
 }
-
-
-
-
-// #include <EEPROM.h>
-
-// void setup()
-// {
-//   for (int i = 0; i < 255; i++)
-//     EEPROM.write(i, i);
-//     delay(5);         
-// }
-
-// void loop()
-// {
-// }     CƠ BẢN
