@@ -35,12 +35,13 @@ void loop()
     if (distance<=20)
     { 
       digitalWrite(relay,1);
-      delay(500);
+      delay(5000);
     }
     else 
     {
       digitalWrite(relay,0);
-      delay(500);
 
-    }    
+
+}
+         
 }
