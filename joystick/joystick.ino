@@ -17,12 +17,12 @@ void loop ()
               int y = analogRead(bientroY);  // doc gia tri cua truc Y
               int KEY = digitalRead(button);  // doc gia tri cua nut nhan
               // Xuat ra cong Serial
-              int valx = map(x,0,1023,0,180);
-              int valy = map(y,0,1023,0,180);
-              Serial.print("X="); Serial.println(valx);
-              Serial.print("Y="); Serial.println(valy);
-              Serial.print("KEY="); Serial.print(KEY); Serial.println();
+              //int valx = map(x,0,1023,0,180);
+              //int valy = map(y,0,1023,0,180);
+              Serial.print("X="); Serial.println(x);
+             // Serial.print("Y="); Serial.println(y);
+              //Serial.print("KEY="); Serial.print(KEY); Serial.println();
               delay(200);//delay để ổn định hơn
-              se1.write(valx);
-              se1.write(valy);      
+              //se1.write(valx);
+              //lse1.write(valy);      
 }
