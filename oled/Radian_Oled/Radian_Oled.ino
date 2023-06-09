@@ -95,7 +95,7 @@ void loop() {
     // draw the big value on top
     u8g.setFont(u8g_font_8x13r);                      // set bigger font
     dtostrf(potentiometer_value/10.0, 1, 1, buffer);  // float to string, -- value, min. width, digits after decimal, buffer to store
-    sprintf(buffer, "%s%s", buffer, "%");             // add some random ending character
+    sprintf(buffer, "%s%s", buffer, " Angel");             // add some random ending character
 
     string_width = u8g.getStrWidth(buffer);           // calculate string width
 
