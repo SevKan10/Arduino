@@ -1,7 +1,7 @@
 #include "U8glib.h"
 
 //U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_DEV_0 | U8G_I2C_OPT_NO_ACK | U8G_I2C_OPT_FAST); // Cho chuẩn màn hình I2C
-U8GLIB_SSD1306_128X64 u8g(13, 11, 8, 9, 10);   // SPI communication: SCL = 13, SDA = 11, RES = 10, DC = 9, CS = 8, Cho chuẩn màn hình SPI
+U8GLIB_SSD1306_128X64 u8g(13, 11, 8, 9, 10);   // SPI communication: SCL,D0 = 13, SDA,D1 = 11, RES = 10, DC = 9, CS = 8, Cho chuẩn màn hình SPI
 
 int potentiometer_value = 0; // value from the potentiometer
 char buffer[20];       // helper buffer for converting values into C-style string (array of chars)
