@@ -69,7 +69,7 @@ void loop() {
 
       if (pixel_x > 0 && pixel_x < 128 && pixel_y > 0 && pixel_y < 64) {  // only draw inside of the screen
 
-        if(tick_value >= 0 && tick_value <= 100) {  // only draw tickmarks between values 0-100%, could be removed when using rotary controller
+        if(tick_value >= 0 && tick_value <= 180) {  // only draw tickmarks between values 0-100%, could be removed when using rotary controller
 
           if (tick_value % 10 == 0) {                                // draw big tickmark == lines + text
             line_x =  sin(radians(angle)) * radius_line + center_x;  // calculate x pos for the line end
@@ -119,7 +119,7 @@ void loop() {
   } while ( u8g.nextPage() );    // required for u8g library
 
 
-  potentiometer_value = map(analogRead(A0), 0, 1023, 1000, 0);     // read the potentiometer value, remap it to 0-1000
+  potentiometer_value = map(analogRead(A0), 0, 512, 0, 1800);     // read the potentiometer value, remap it to 0-1000
 
   millis_time_last = millis_time;                                  // store last millisecond value
   millis_time = millis();                                          // get millisecond value from the start of the program

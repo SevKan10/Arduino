@@ -1,26 +1,30 @@
+#include <Wire.h>;
+#include <LiquidCrystal_I2C.h>;
+LiquidCrystal_I2C lcd(0x27,16,2);
 
-#include <TinyGPS++.h>           // Include TinyGPS++ library
+#include <TinyGPS++.h>  // Include TinyGPS++ library
 
-#include <SoftwareSerial.h>      // Include software serial library
+#include <SoftwareSerial.h>  // Include software serial library
 
 TinyGPSPlus gps;
 
-#define S_RX    8                // Define software serial RX pin
+#define S_RX 8  // Define software serial RX pin
 
-#define S_TX    9                // Define software serial TX pin
+#define S_TX 9  // Define software serial TX pin
 
-SoftwareSerial SoftSerial(S_RX, S_TX);    // Configure SoftSerial library
+SoftwareSerial SoftSerial(S_RX, S_TX);  // Configure SoftSerial library
 
 void setup(void) {
 
   Serial.begin(9600);
 
-  SoftSerial.begin(9600);  
-
+  SoftSerial.begin(9600);
+  lcd.init();       //Khởi động màn hình. Bắt đầu cho phép Arduino sử dụng màn hình
+  lcd.backlight();
 }
 
 void loop() {
-  
+
   while (SoftSerial.available() > 0) {
 
     if (gps.encode(SoftSerial.read())) {
@@ -73,19 +77,19 @@ void loop() {
 
         Serial.print("Time (GMT) : ");
 
-        if(gps.time.hour() < 10)     Serial.print("0");
+        if (gps.time.hour() < 10) Serial.print("0");
 
         Serial.print(gps.time.hour());
 
         Serial.print(":");
 
-        if(gps.time.minute() < 10)   Serial.print("0");
+        if (gps.time.minute() < 10) Serial.print("0");
 
         Serial.print(gps.time.minute());
 
         Serial.print(":");
 
-        if(gps.time.second() < 10)   Serial.print("0");
+        if (gps.time.second() < 10) Serial.print("0");
 
         Serial.println(gps.time.second());
 
@@ -99,13 +103,13 @@ void loop() {
 
         Serial.print("Date       : ");
 
-        if(gps.date.day() < 10)      Serial.print("0");
+        if (gps.date.day() < 10) Serial.print("0");
 
         Serial.print(gps.date.day());
 
         Serial.print("/");
 
-        if(gps.date.month() < 10)    Serial.print("0");
+        if (gps.date.month() < 10) Serial.print("0");
 
         Serial.print(gps.date.month());
 
@@ -130,9 +134,9 @@ void loop() {
       else
 
         Serial.println("Satellites Invalid");
-
     }
-
   }
-
+    lcd.setCursor(0,0);
+    lcd.print("Sat: ");
+    lcd.print(gps.satellites.value());
 }
