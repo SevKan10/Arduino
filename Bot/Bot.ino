@@ -874,41 +874,35 @@ void display_JF(){
   display.clearDisplay();
   display.setTextSize(2);
   display.setTextColor(WHITE);
-  display.setCursor(10,15);  
-  display.println("Sirius FI");
+  display.setCursor(35,15);  
+  display.println("HELLO");
   display.display();
 
-  display.setTextSize(1);
+  display.setTextSize(2);
   display.setTextColor(WHITE);
-  display.setCursor(35,35);  
-  display.println("Pham Vi Kha");
+  display.setCursor(0,35);  
+  display.println("SevKan1007");
   display.display();
   delay(7000);
 }
-
 void blink_eye(){
   display.clearDisplay();
   display.drawBitmap(0,0,mo_mat,128,64,WHITE);
   display.display();
- 
   display.clearDisplay();
   display.drawBitmap(0,0,mo_mot_nua,128,64,WHITE);
   display.display();
- 
   display.clearDisplay();
   display.drawBitmap(0,0,nham_mat,128,64,WHITE);
   display.display();
-
   display.clearDisplay();
   display.drawBitmap(0,0,mo_mot_nua,128,64,WHITE);
   display.display();
-  
   display.clearDisplay();
   display.drawBitmap(0,0,mo_mat,128,64,WHITE);
   display.display();
   delay(1000);
 }
-
 void tuc_cute_face(){
   display.clearDisplay();
   display.drawBitmap(0,0,mo_mat,128,64,WHITE);
@@ -1007,32 +1001,9 @@ void pin(){
   display.clearDisplay();
   display.drawBitmap(0,0,nham_mat,128,64,WHITE);
   display.display();
- 
-  display.clearDisplay();
-  display.drawBitmap(0,0,pin_0,128,64,WHITE);
-  display.display();
-  delay(500);
 
-  display.clearDisplay();
-  display.drawBitmap(0,0,pin_1,128,64,WHITE);
-  display.display();
-  delay(500);
-    
-  display.clearDisplay();
-  display.drawBitmap(0,0,pin_2,128,64,WHITE);
-  display.display();
-  delay(500);
-  
-  display.clearDisplay();
-  display.drawBitmap(0,0,pin_3,128,64,WHITE);
-  display.display();
-  delay(500);
-  
-  display.clearDisplay();
-  display.drawBitmap(0,0,pin_4,128,64,WHITE);
-  display.display();  
-  delay(500);
 }
+ 
 void sac_pin_(){
   display.clearDisplay();
   display.drawBitmap(0,0,mo_mat,128,64,WHITE);
@@ -1043,35 +1014,7 @@ void sac_pin_(){
   display.drawBitmap(0,0,nham_mat,128,64,WHITE);
   display.display();
  
-  display.clearDisplay();
-  display.drawBitmap(0,0,pin_0,128,64,WHITE);
-  display.display();
-  delay(500);
-
-  display.clearDisplay();
-  display.drawBitmap(0,0,pin_1,128,64,WHITE);
-  display.display();
-  delay(500);
-    
-  display.clearDisplay();
-  display.drawBitmap(0,0,pin_0,128,64,WHITE);
-  display.display();
-  delay(500);
   
-  display.clearDisplay();
-  display.drawBitmap(0,0,pin_1,128,64,WHITE);
-  display.display();
-  delay(500);
-
-  display.clearDisplay();
-  display.drawBitmap(0,0,pin_0,128,64,WHITE);
-  display.display();
-  delay(500);
-
-  display.clearDisplay();
-  display.drawBitmap(0,0,sac_pin,128,64,WHITE);
-  display.display();
-  delay(500);
 }
 void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
