@@ -38,5 +38,5 @@ void loop() {
   Serial.println(" degC");
  
   Serial.println("");
-  delay(100);
+  delay(1000);
 }
