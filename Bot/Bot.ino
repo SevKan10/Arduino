@@ -881,7 +881,7 @@ void display_JF(){
   display.setTextSize(2);
   display.setTextColor(WHITE);
   display.setCursor(0,35);  
-  display.println("SevKan1007");
+  display.println("SevKan1007");3
   display.display();
   delay(7000);
 }
