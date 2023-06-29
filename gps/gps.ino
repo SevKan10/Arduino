@@ -1,7 +1,3 @@
-#include <Wire.h>;
-#include <LiquidCrystal_I2C.h>;
-LiquidCrystal_I2C lcd(0x27,16,2);
-
 #include <TinyGPS++.h>  // Include TinyGPS++ library
 
 #include <SoftwareSerial.h>  // Include software serial library
@@ -136,7 +132,4 @@ void loop() {
         Serial.println("Satellites Invalid");
     }
   }
-    lcd.setCursor(0,0);
-    lcd.print("Sat: ");
-    lcd.print(gps.satellites.value());
 }
