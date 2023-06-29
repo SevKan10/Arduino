@@ -1,7 +1,7 @@
 #include "U8glib.h"
 
-//U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_DEV_0 | U8G_I2C_OPT_NO_ACK | U8G_I2C_OPT_FAST); // Cho chuẩn màn hình I2C
-U8GLIB_SSD1306_128X64 u8g(13, 11, 8, 9, 10);   // SPI communication: SCL,D0 = 13, SDA,D1 = 11, RES = 10, DC = 9, CS = 8, Cho chuẩn màn hình SPI
+U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_DEV_0 | U8G_I2C_OPT_NO_ACK | U8G_I2C_OPT_FAST); // Cho chuẩn màn hình I2C
+//U8GLIB_SSD1306_128X64 u8g(13, 11, 8, 9, 10);   // SPI communication: SCL,D0 = 13, SDA,D1 = 11, RES = 10, DC = 9, CS = 8, Cho chuẩn màn hình SPI
 
 int potentiometer_value = 0; // value from the potentiometer
 char buffer[20];       // helper buffer for converting values into C-style string (array of chars)
@@ -119,7 +119,7 @@ void loop() {
   } while ( u8g.nextPage() );    // required for u8g library
 
 
-  potentiometer_value = map(analogRead(A0), 0, 512, 0, 1800);     // read the potentiometer value, remap it to 0-1000
+  potentiometer_value = map(analogRead(A0), 0, 1023, 0, 1800); 
 
   millis_time_last = millis_time;                                  // store last millisecond value
   millis_time = millis();                                          // get millisecond value from the start of the program

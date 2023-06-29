@@ -3,7 +3,7 @@
 
 #define OLED_SDA 21   
 #define OLED_SCL 22  
- #define OLED_RESET 4 
+#define OLED_RESET 4 
 Adafruit_SSD1306 display(OLED_RESET);
 
 void setup() {
