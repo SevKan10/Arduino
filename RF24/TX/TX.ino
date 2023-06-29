@@ -16,7 +16,7 @@ unsigned long time;
 
 void setup() {
   Serial.begin(9600);
-  radio.begin();
+  radio.begin();n
   if (!radio.begin()) {Serial.print("RF DON'T START");}
   radio.openWritingPipe(address);
   radio.setPALevel(RF24_PA_HIGH);

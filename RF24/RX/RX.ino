@@ -1,3 +1,5 @@
+#include <Servo.h>
+Servo se;
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
@@ -17,7 +19,7 @@ unsigned long ping = 0;
 
 void setup() {
   Serial.begin(9600);
-  
+  se.attach(6);
   radio.begin();
   if (!radio.begin()) {
     Serial.println("NRF24L01 Don't Start!");
@@ -41,17 +43,10 @@ void loop() {
     Serial.print(receivedData1);
     Serial.print("\t");
     Serial.println(receivedData2);
+    int receivedData1l = map(receivedData1,0,1023,0,180);
+    se.write(receivedData1l);
     
   }
- if(receivedData1>900){
-   if (millis() - time >=10){
-   for (int i=0;i<256;i++){
-   digitalWrite(led, i);
-   time = millis();
-   }
-   }
- } 
-
   while(!radio.available())
   {
     ping++; 
