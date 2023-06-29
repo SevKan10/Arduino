@@ -1,9 +1,4 @@
-#include <Wire.h>;
-#include <LiquidCrystal_I2C.h>;
-LiquidCrystal_I2C lcd(0x27,16,2);
-
 #include <TinyGPS++.h>  // Include TinyGPS++ library
-
 #include <SoftwareSerial.h>  // Include software serial library
 
 TinyGPSPlus gps;
@@ -17,10 +12,7 @@ SoftwareSerial SoftSerial(S_RX, S_TX);  // Configure SoftSerial library
 void setup(void) {
 
   Serial.begin(9600);
-
   SoftSerial.begin(9600);
-  lcd.init();       //Khởi động màn hình. Bắt đầu cho phép Arduino sử dụng màn hình
-  lcd.backlight();
 }
 
 void loop() {
@@ -136,7 +128,4 @@ void loop() {
         Serial.println("Satellites Invalid");
     }
   }
-    lcd.setCursor(0,0);
-    lcd.print("Sat: ");
-    lcd.print(gps.satellites.value());
 }
