@@ -4,7 +4,6 @@
 TinyGPSPlus gps;
 
 #define S_RX 8  // Define software serial RX pin
-
 #define S_TX 9  // Define software serial TX pin
 
 SoftwareSerial SoftSerial(S_RX, S_TX);  // Configure SoftSerial library

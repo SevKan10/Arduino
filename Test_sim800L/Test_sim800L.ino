@@ -1,4 +1,5 @@
 #include <SoftwareSerial.h>
+#include<SoftwareSerial.h>
 SoftwareSerial simSerial(2, 3); 
 
 String ADMIN = "0945964083";            //Số ĐT ADMIN
