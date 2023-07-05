@@ -11,17 +11,17 @@ TinyGPSPlus gps;
 #define SCREEN_WIDTH 128  
 #define SCREEN_HEIGHT 64 
 #define OLED_RESET     -1
-#define SCREEN_ADDRESS 0x3D
+#define SCREEN_ADDRESS 0x3C
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 float Lat,Lng;
-const String numberPhone = "0866207887";
+const String numberPhone = "0332473716";
 int x,y,z;
 int val=0;
 int ledCall = 27;
 int ledCon = 26;
 int ledCon2 = 25;
-int button = 2;
+int button = 18;
 int Num = 0;
 void setup() {
   Serial2.begin(9600);

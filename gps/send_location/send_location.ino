@@ -4,6 +4,7 @@ TinyGPSPlus gps;
 #define RX 8  
 #define TX 9  
 SoftwareSerial SoftSerial(RX, TX);  
+
 void setup(void) 
 {
   Serial.begin(9600);
@@ -36,7 +37,7 @@ void loop()
       String url = "http://maps.google.com/maps?q=loc:";
       url = url + String(gps.location.lat(), 6) + "," + String(gps.location.lng(), 6);
       {
-      //Serial.println(url);
+      Serial.println(url);
       } 
 }
 // Code by SevKan

@@ -8,7 +8,7 @@ void SOS() {
   updateSerial();
   Serial2.println("AT+CMGS=\"" + numberPhone + "\"\r");
   updateSerial();
-  Serial2.print("HELP ME!");
+  Serial2.print("give me my money");
   Serial2.print("http://maps.google.com/maps?z=18&q=");
   Serial2.print(Lat, 6);
   Serial2.print(",");
