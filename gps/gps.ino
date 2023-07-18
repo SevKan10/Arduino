@@ -39,7 +39,7 @@ void loop() {
       if (gps.time.isValid()) {
         Serial.print("Time (GMT) : ");
         if (gps.time.hour() < 10) Serial.print("0");
-        Serial.print(gps.time.hour());
+        Serial.print(gps.time.hour()+7);
         Serial.print(":");
         if (gps.time.minute() < 10) Serial.print("0");
         Serial.print(gps.time.minute());
