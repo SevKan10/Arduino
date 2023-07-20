@@ -2,9 +2,9 @@
 #include <nRF24L01.h>
 #include <RF24.h>
 RF24 radio(9, 10); // CE, CSN
-const byte address[6] = "2210";
+const byte address[6] = "01234";
 int receivedData1;
-  
+int led = 7;  
 
 void setup() {
   Serial.begin(9600);
@@ -23,8 +23,7 @@ void loop() {
   while (radio.available()) {
     radio.read(&receivedData1, sizeof(receivedData1));
     Serial.print("Received data:  ");
-    Serial.println(receivedData1);
-
-    
+    Serial.println(receivedData1);    
+    digitalWrite(led, receivedData1);
   }
 }
