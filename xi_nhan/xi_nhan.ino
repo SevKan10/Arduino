@@ -182,32 +182,28 @@ void loop() {
   Serial.print("\r\n");
   delay(2);
   doc = analogRead(bientro);
-  filter = //locnhieu.updateEstimate(doc);
+  filter = locnhieu.updateEstimate(doc);
 
   Serial.println(filter);
-  if (kalAngleY <= 53  ) {  // rẽ phải
-    digitalWrite(left, 0);
-    digitalWrite(off, 0);
-    Serial.println("Turn Right");
-    digitalWrite(right, 1);
-
+  if (kalAngleY <= 53) {  // rẽ phải
+    Right();
   }
-  if (kalAngleY>= 55 && kalAngleY<= 65) {  //tắt
-    digitalWrite(right, 0);
-    digitalWrite(left, 0);
-    digitalWrite(off, 1);
+  if (filter <= 400) {
+    Right();
   }
-  if (kalAngleY >= 73 ) { // rẽ trái
-    digitalWrite(right, 0);
-    digitalWrite(off, 0);
-    Serial.println("Turn Left");
-    digitalWrite(left, 1);
+  if (kalAngleY >= 55 && kalAngleY <= 65) {  //tắt
+      Off();
+      if (filter <= 400 || filter >= 623){digitalWrite(off,0);}
   }
-
-  if (kalAngleY>= 55 && kalAngleY<= 65  ) { // tắt
-    digitalWrite(right, 0);
-    digitalWrite(left, 0);
-    digitalWrite(off, 1);
+  if (filter >= 500 && filter <= 599) {
+    Off();
+      if (kalAngleY <= 53 || kalAngleY >= 73 ){digitalWrite(off,0);}
+  }
+  if (kalAngleY >= 73 ) {  // rẽ trái
+    Left();
+  }
+  if (filter >= 623){
+    Left();
   }
 }
 // || filter >=500 && filter<=599
