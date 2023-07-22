@@ -30,6 +30,9 @@ void setup() {
   pinMode(left, OUTPUT);
   pinMode(off, OUTPUT);
   Wire.begin();
+  digitalWrite(off,1);
+  delay(100);
+  digitalWrite(off,0);
 #if ARDUINO >= 157
   Wire.setClock(400000UL);
 #else
@@ -191,13 +194,24 @@ void loop() {
   if (filter <= 400) {
     Right();
   }
-  if (kalAngleY >= 55 && kalAngleY <= 65) {  //tắt
-      Off();
-      if (filter <= 400 || filter >= 623){digitalWrite(off,0);}
+  if (kalAngleY >= 58 && kalAngleY <= 60) {  //tắt
+    digitalWrite(off,1);
+      if (filter <= 400 ){digitalWrite(off,0);
+      Right();
+      }
+      else if (filter>=623){
+        digitalWrite(off,0);
+        Left();
+      }
   }
-  if (filter >= 500 && filter <= 599) {
-    Off();
-      if (kalAngleY <= 53 || kalAngleY >= 73 ){digitalWrite(off,0);}
+  if (filter >= 594 && filter <= 599) {
+    digitalWrite(off,1);
+      if (kalAngleY <= 53 ){digitalWrite(off,0);
+      Right();
+      }
+      else if(kalAngleY >= 73){
+        Left();
+      }
   }
   if (kalAngleY >= 73 ) {  // rẽ trái
     Left();
