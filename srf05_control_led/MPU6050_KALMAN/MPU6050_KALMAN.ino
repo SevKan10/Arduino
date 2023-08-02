@@ -22,17 +22,13 @@ float doc;
 float filter;
 int right = 2;
 int left = 3;
-int off = 4;
+
 void setup() {
   Serial.begin(9600);
   pinMode(bientro, INPUT);
   pinMode(right, OUTPUT);
   pinMode(left, OUTPUT);
-  pinMode(off, OUTPUT);
   Wire.begin();
-  digitalWrite(off,1);
-  delay(100);
-  digitalWrite(off,0);
 #if ARDUINO >= 157
   Wire.setClock(400000UL);
 #else
@@ -166,14 +162,10 @@ void loop() {
 
   Serial.print("\t");
 
-  Serial.print(pitch);
-  Serial.print("\t");
-  Serial.print(gyroYangle);
-  Serial.print("\t");
-  Serial.print(compAngleY);
-  Serial.print("\t");
-  Serial.print(kalAngleY);
-  Serial.print("\t");
+  // Serial.print(pitch); Serial.print("\t");
+  // Serial.print(gyroYangle); Serial.print("\t");
+  // Serial.print(compAngleY); Serial.print("\t");
+  Serial.print(kalAngleY); Serial.print("\t");
 
 #if 0  // Set to 1 to print the temperature
   Serial.print("\t");
@@ -184,41 +176,5 @@ void loop() {
 
   Serial.print("\r\n");
   delay(2);
-  doc = analogRead(bientro);
-  filter = locnhieu.updateEstimate(doc);
-
-  Serial.println(filter);
-//   if (kalAngleY <= 53) {  // rẽ phải
-//     Right();
-//   }
-//   if (filter <= 400) {
-//     Right();
-//   }
-//   if (kalAngleY >= 58 && kalAngleY <= 60) {  //tắt
-//     digitalWrite(off,1);
-//       if (filter <= 400 ){digitalWrite(off,0);
-//       Right();
-//       }
-//       else if (filter>=623){
-//         digitalWrite(off,0);
-//         Left();
-//       }
-//   }
-//   if (filter >= 594 && filter <= 599) {
-//     digitalWrite(off,1);
-//       if (kalAngleY <= 53 ){digitalWrite(off,0);
-//       Right();
-//       }
-//       else if(kalAngleY >= 73){
-//         Left();
-//       }
-//   }
-//   if (kalAngleY >= 73 ) {  // rẽ trái
-//     Left();
-//   }
-//   if (filter >= 623){
-//     Left();
-//   }
-// }
-// // || filter >=500 && filter<=599
-// //filter<=400  || filter>=623
+ 
+}

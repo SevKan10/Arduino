@@ -16,23 +16,28 @@ uint8_t i2cData[14];
 //-------------------------------------------
 #include <SimpleKalmanFilter.h>
 SimpleKalmanFilter locnhieu(2, 2, 0.01);
-
-int bientro = A0;
+//------------------------------------------- Chân
+#define right 3
+#define left 2
+#define mode 4
+#define bientro A0
+//-------------------------------------------
 float doc;
-float filter;
-int right = 2;
-int left = 3;
-int off = 4;
+int filter; int goc;
+int on_r = 1; int off_r;
+int on_l = 1; int off_l;
+int off_m = 0;
+int X;
+unsigned long delay_r; unsigned long delay_Off_r;
+unsigned long delay_l; unsigned long delay_Off_l;
 void setup() {
   Serial.begin(9600);
   pinMode(bientro, INPUT);
   pinMode(right, OUTPUT);
   pinMode(left, OUTPUT);
-  pinMode(off, OUTPUT);
+  pinMode(mode,OUTPUT);
+  //pinMode(off, OUTPUT);
   Wire.begin();
-  digitalWrite(off,1);
-  delay(100);
-  digitalWrite(off,0);
 #if ARDUINO >= 157
   Wire.setClock(400000UL);
 #else
@@ -164,61 +169,81 @@ void loop() {
   // Serial.print(kalAngleX);
   // Serial.print("\t");
 
-  Serial.print("\t");
-
-  Serial.print(pitch);
-  Serial.print("\t");
-  Serial.print(gyroYangle);
-  Serial.print("\t");
-  Serial.print(compAngleY);
-  Serial.print("\t");
-  Serial.print(kalAngleY);
-  Serial.print("\t");
-
 #if 0  // Set to 1 to print the temperature
   Serial.print("\t");
 
   double temperature = (double)tempRaw / 340.0 + 36.53;
-  //Serial.print(temperature); Serial.print("\t");
+  //Serial.print(temperature); Serial.print("\t");    kalAngleY < 53 phải || kalAngleY > 73 trái || filter <= 400 trái || filter >= 623 phải
 #endif
 
   Serial.print("\r\n");
   delay(2);
   doc = analogRead(bientro);
   filter = locnhieu.updateEstimate(doc);
+  goc = map(filter,0,1023, 0,180);
+  Serial.print("Góc Biến Trở: ");Serial.print(goc); Serial.print("\t"); Serial.print("Góc MPU: "); Serial.println(kalAngleY);
 
-  Serial.println(filter);
-//   if (kalAngleY <= 53) {  // rẽ phải
-//     Right();
-//   }
-//   if (filter <= 400) {
-//     Right();
-//   }
-//   if (kalAngleY >= 58 && kalAngleY <= 60) {  //tắt
-//     digitalWrite(off,1);
-//       if (filter <= 400 ){digitalWrite(off,0);
-//       Right();
-//       }
-//       else if (filter>=623){
-//         digitalWrite(off,0);
-//         Left();
-//       }
-//   }
-//   if (filter >= 594 && filter <= 599) {
-//     digitalWrite(off,1);
-//       if (kalAngleY <= 53 ){digitalWrite(off,0);
-//       Right();
-//       }
-//       else if(kalAngleY >= 73){
-//         Left();
-//       }
-//   }
-//   if (kalAngleY >= 73 ) {  // rẽ trái
-//     Left();
-//   }
-//   if (filter >= 623){
-//     Left();
-//   }
-// }
-// // || filter >=500 && filter<=599
-// //filter<=400  || filter>=623
+//---------------------------------------------------------------------------------------------- Quẹo Phải 
+   if( kalAngleY < 50 and millis() - delay_r >= 1500 )
+     { Serial.println("1"); on_right(); off_r = 1; delay_Off_r = millis(); delay_r = millis(); }
+//---------------------------------------------------------------------------------------------- Dừng
+   if( kalAngleY > 50 and kalAngleY < 70 and goc > 70 && goc < 100) 
+     { Serial.println("2"); on_r = 1; off_right(); on_l = 1; off_left(); off_m = 1; delay_r = millis(); delay_l = millis(); }
+//---------------------------------------------------------------------------------------------- Quẹo Trái
+   if( kalAngleY > 70 and millis() - delay_l >= 1500 ) 
+     { Serial.println("3"); on_left(); off_l = 1; delay_Off_l = millis(); delay_l = millis(); }
+//---------------------------------------------------------------------------------------------- POT Quẹo Phải
+   if( goc < 70 and millis() - delay_r >= 1500 ) 
+     { Serial.println("4"); on_right(); off_r = 1; delay_Off_r = millis(); delay_r = millis(); }
+//-----------------------------------------------------------------------------------------------POT Quẹo Trái
+   if( goc > 100  and millis() - delay_l >= 1500 ) 
+     { Serial.println("5"); on_left(); off_l = 1; delay_Off_l = millis(); delay_l = millis(); }
+//----------------------------------------------------------------------------------------------- 
+   while( kalAngleY < 50 and goc > 100)
+     { Serial.println("6"); Mode(); delay_r = millis(); delay_l = millis(); return loop();}
+   while( kalAngleY > 70 and goc < 70) 
+     { Serial.println("7"); Mode(); delay_r = millis(); delay_l = millis(); return loop();}
+   while (X == 1) 
+   {
+    if(kalAngleY < 50 and goc > 70 && goc < 100)
+     {on_r = 1; on_l = 0; X=0;}
+    if(kalAngleY > 70 and goc > 70 && goc < 100)
+     {on_l = 1; on_r = 0; X=0;} //
+    if(kalAngleY > 50 and kalAngleY < 70 and goc < 70)
+     {on_r = 1; on_l = 0; X=0;}
+    if(kalAngleY > 50 and kalAngleY < 70 and goc > 100)
+     {on_l = 1; on_r = 0; X=0;}
+   }
+}
+
+// || filter >=500 && filter<=599
+//filter<=400  || filter>=623
+//---------------------------------------------------------------------------------------- Phải 
+void on_right() 
+{
+ if( on_r == 1 )
+  { digitalWrite(right,HIGH); delay(50); digitalWrite(right,LOW); on_r = 0; }
+}
+void off_right() 
+{
+ if( off_r == 1 )
+  { digitalWrite(right,HIGH); delay(50); digitalWrite(right,LOW); off_r = 0; }
+}
+//---------------------------------------------------------------------------------------- Trái
+void on_left() 
+{
+ if( on_l == 1 )
+  { digitalWrite(left,HIGH); delay(50); digitalWrite(left,LOW); on_l = 0; delay_l = millis(); }
+}
+void off_left() 
+{
+ if( off_l == 1 )
+  { digitalWrite(left,HIGH); delay(50); digitalWrite(left,LOW); off_l = 0; }
+}
+void Mode() 
+{
+ if( off_m == 1 )
+  { X = 1; digitalWrite(mode,HIGH); delay(50); digitalWrite(mode,LOW); delay(50); digitalWrite(mode,HIGH); delay(50); digitalWrite(mode,LOW); delay(50); digitalWrite(mode,HIGH); delay(50); digitalWrite(mode,LOW); delay(50); digitalWrite(mode,HIGH); delay(50); digitalWrite(mode,LOW);
+    off_m = 0;
+  }
+}
