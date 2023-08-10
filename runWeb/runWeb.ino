@@ -16,35 +16,67 @@ const char MainPage[] PROGMEM = R"=====(
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tài Xỉu</title>
+    <title>Trang web giới thiệu mạng xã hội</title>
     <style>
-        .result {
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            margin: 10px;
+            color: #fff;
             font-size: 24px;
-            font-weight: bold;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: #333;
+        }
+
+        /* Hiệu ứng cho biểu tượng mạng xã hội */
+        .social-icons a.github {
+            background-color: #333;
+        }
+
+        .social-icons a.facebook {
+            background-color: #3b5998;
+        }
+
+        .social-icons a.zalo {
+            background-color: #1ebc4e;
         }
     </style>
 </head>
 <body>
-    <h1>Tài Xỉu</h1>
-    <button onclick="rollDice()">Lắc xúc xắc</button>
-    <p class="result" id="result"></p>
+    <h1>Trang web giới thiệu mạng xã hội</h1>
 
-    <script>
-        function rollDice() {
-            var dice1 = Math.floor(Math.random() * 6) + 1;
-            var dice2 = Math.floor(Math.random() * 6) + 1;
-            var sum = dice1 + dice2;
-            var resultElement = document.getElementById('result');
+    <div class="social-icons">
+        <a href="https://github.com/SevKan10" target="_blank" class="github"><i class="fab fa-github"></i></a>
+        <a href="https://www.facebook.com/khang.khangkhuu" target="_blank" class="facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://chat.zalo.me" target="_blank" class="zalo"><i class="fab fa-zalo"></i></a>
+    </div>
 
-            resultElement.innerText = 'Kết quả: ' + sum;
-
-            if (sum === 7 || sum === 11) {
-                resultElement.style.color = 'green';
-            } else {
-                resultElement.style.color = 'red';
-            }
-        }
-    </script>
+    <script src="https://kit.fontawesome.com/f09a.js" crossorigin="anonymous"></script>
 </body>
 </html>
 
