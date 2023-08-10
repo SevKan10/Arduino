@@ -6,7 +6,7 @@
 const char* ssid = "MINH KHA";
 const char* password = "0855508877";
 
-const char* host = "E-SMART";
+const char* host = "TEST";
 const char* updatePath = "/update";
 const char* updateUsername = "Khang";
 const char* updatePassword = "12345678";
