@@ -3,15 +3,13 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 #include <ESP8266HTTPUpdateServer.h>
+const char* host = "Kan";
 const char* ssid = "Hoang Cuong.";
 const char* password = "99999999";
 
-const char* host = "TEST";
-const char* updatePath = "/update";
-
 ESP8266WebServer webServer(80);
 ESP8266HTTPUpdateServer httpUpdater;
-//-----------------------------------------//
+//-----------------------------------------------Trang chính
 const char MainPage[] PROGMEM = R"=====(
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +20,8 @@ const char MainPage[] PROGMEM = R"=====(
 <style>
     h1{
         text-align: center;
+        text-shadow: 0cap;
+
     }
     h3{
         text-align: right;
@@ -31,21 +31,18 @@ const char MainPage[] PROGMEM = R"=====(
 <body>
     <h1>
         <div style="width: 300px; margin-left: auto; margin-right: auto;">
-             Welcome to iFrame
+             Welcome to <a style="color:red">iFarme </a>
             <button onclick="window.location.href='button.html'">Click here to continue</button>
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         </div>
     </h1> 
     <h3>
-        <a ><b><i>Design by Giai Xuan's student</i></b></a>
+        <a><i>Design by Giai Xuan's student</i></a>
     </h3>
 </body>
 </html>
-
-
-
 )=====";
-
+//--------------------------------------------Trang phụ
 const char PoPage[] PROGMEM = R"=====(
 <!DOCTYPE html>
 <html lang="en">
@@ -61,14 +58,14 @@ const char PoPage[] PROGMEM = R"=====(
 
 )=====";
 int up = 4;
-void setup(void){
+void setup(void) {
   Serial.begin(9600);
   Serial.println();
   Serial.println("Booting programs...");
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
 
-  while(WiFi.waitForConnectResult() != WL_CONNECTED){
+  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
     WiFi.begin(ssid, password);
     Serial.println("WiFi failed, retrying.");
   }
@@ -77,23 +74,19 @@ void setup(void){
   MDNS.begin(host);
   MDNS.addService("http", "tcp", 80);
 
-  webServer.on("/",[]{
+  webServer.on("/", [] {
     String s = MainPage;
-    webServer.send(200,"text/html",s);
+    webServer.send(200, "text/html", s);
+  });
+  webServer.on("/button.html", []() {
+    String s = PoPage;
+    webServer.send(200, "text/html", s);
   });
   webServer.begin();
   Serial.println("Web Server is started!");
-
-  //=========Chương trình Chính=====//
-  pinMode(up,OUTPUT);
-  //============End=================//
 }
 
-void loop(void){
+void loop(void) {
   MDNS.update();
   webServer.handleClient();
-  //====Chương trình Chính==========//
-  digitalWrite(up,!digitalRead(up));
-  delay(500);
-  //=========End====================//
 }
