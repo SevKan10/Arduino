@@ -1,9 +1,10 @@
-#include <ESP8266WiFi.h>
-#include <ESP8266WebServer.h>
+#include <WiFi.h>
+#include <WebServer.h>
+
 const char* ssid = "MINH KHA";
 const char* password = "0855508877";
 
-ESP8266WebServer webServer(80);
+WebServer webServer(80);
 //-----------------------------------------------Trang chính
 const char MainPage[] PROGMEM = R"=====(
 <!DOCTYPE html>
@@ -122,7 +123,7 @@ const char flowPage[] PROGMEM = R"=====(
             </tr>
         </h1>
             <tr>
-              <td><button class="button1" style="vertical-align:middle" onclick="window.location.href='dataTray1.html'"><span><b>Tray 1</b></span></button></td>
+              <td><button class="button1" style="vertical-align:middle" onclick="window.location.href='dataTray5.html'"><span><b>Tray 1</b></span></button></td>
               <td>name2</td>
             </tr>
             <tr>
@@ -797,7 +798,7 @@ void setup(void) {
     String s = addPage;
     webServer.send(200, "text/html", s);
   });
-    webServer.on("/dataTray1.html", []() {
+    webServer.on("/dataTray5.html", []() {
     String s = tray1Page;
     webServer.send(200, "text/html", s);
   });
