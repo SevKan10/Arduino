@@ -12,7 +12,7 @@ const char MainPage[] PROGMEM = R"=====(
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>iFarme</title> 
+  <title>iFarme</title>   
   <style> 
       body {text-align:center;}
       
@@ -39,6 +39,7 @@ const char MainPage[] PROGMEM = R"=====(
   </style>
 </head>
 <body>
+  <marquee behavior=" scroll" direction="" scrollamount="4" bgcolor="green"> Giai Xuan High School </marquee>
   <script>
     function login() {
       var name = prompt("ADMIN:");
@@ -73,7 +74,7 @@ const char MainPage[] PROGMEM = R"=====(
                  <br><br><br><br><br><br><br><br><br>
         </h1> 
             <h5>
-                <a><i>Design by Giai Xuan's student</i></a><br>
+                <a><i>Design by Giai Xuan High School's student</i></a><br>
                 <a><i>Version 1.0.0</i></a>
 
             </h5>
@@ -123,24 +124,43 @@ const char flowPage[] PROGMEM = R"=====(
             </tr>
         </h1>
             <tr>
-              <td><button class="button1" style="vertical-align:middle" onclick="window.location.href='dataTray5.html'"><span><b>Tray 1</b></span></button></td>
-              <td>name2</td>
+              <td><button class="button1" style="vertical-align:middle" onclick="window.location.href='dataTray1.html'"><span><b>Tray 1</b></span></button></td>
+              <td id="value-output1"></td>
             </tr>
             <tr>
                 <td><button class="button1" style="vertical-align:middle" onclick="window.location.href='dataTray2.html'"><span><b>Tray 2</b></span></button></td>
-                <td>name3</td>
+                <td id="value-output2"></td>
             </tr>
             <tr>
                 <td><button class="button1" style="vertical-align:middle" onclick="window.location.href='dataTray3.html'"><span><b>Tray 3</b></span></button></td>
-                <td>name4</td>
+                <td id="value-output3"></td>
             </tr>
             <tr>
                 <td><button class="button1" style="vertical-align:middle" onclick="window.location.href='dataTray4.html'"><span><b>Tray 4</b></span></button></td>
-                <td>name4</td>
+                <td id="value-output4"></td>
             </tr>
           </table>
     </table>
-
+    <script>
+      window.onload = function() {
+        //chậu1
+        var value = localStorage.getItem('name1');
+        var output = document.getElementById('value-output1');
+        output.innerText = value;
+        //chậu2
+        var value = localStorage.getItem('name2');
+        var output = document.getElementById('value-output2');
+        output.innerText = value;
+        //chậu3
+        var value = localStorage.getItem('name3');
+        var output = document.getElementById('value-output3');
+        output.innerText = value;
+        //chậu4
+        var value = localStorage.getItem('name4');
+        var output = document.getElementById('value-output4');
+        output.innerText = value;
+      };
+    </script>
 </body>
 </html>
 )=====";
@@ -186,15 +206,25 @@ const char addPage[] PROGMEM = R"=====(
         <!-- Nhiệt độ -->
         <p>
         <label for="text">Temp: </label>
-        <input type="text" name="txtTemp" id="txtTemp" required onfocus="doico2()" onblur="doilai2()">
+        <input type="number" name="txtTemp" id="txtTemp" required onfocus="doico2()" onblur="doilai2()">
         </p>
         <!-- Độ ẩm -->
         <p>
             <label for="text">Hum: </label>
-            <input type="text" name="txtHum" id="txtHum" required onfocus="doico3()" onblur="doilai3()">
+            <input type="number" name="txtHum" id="txtHum" required onfocus="doico3()" onblur="doilai3()">
+        </p>
+        <p>
+        <label for="text">Tray planting: </label>
+            <select class="form-select" id="tray" name="tray">
+                <option value="">Tray</option>
+                <option value="1" id="tray1">1</option>
+                <option value="2" id="tray2">2</option>
+                <option value="3" id="tray3">3</option>
+                <option value="4" id="tray4">4</option>
+            </select>
         </p>
         <label for="text">Day, month, year planting: </label>
-        <!-- day -->
+        <!-- ngày -->
         <select class="form-select" id="day" name="day">
             <option value="">Day</option>
             <option value="01">01</option>
@@ -229,7 +259,7 @@ const char addPage[] PROGMEM = R"=====(
             <option value="30">30</option>
             <option value="31">31</option>
         </select>
-        <!-- month -->
+        <!-- tháng -->
         <select class="form-select" id="month" name="month">
             <option value="">Month</option>
             <option value="01"> 1</option>
@@ -245,7 +275,7 @@ const char addPage[] PROGMEM = R"=====(
             <option value="11"> 11</option>
             <option value="12"> 12</option>
         </select>
-        <!-- years -->
+        <!-- năm -->
         <select class="form-select" id="year" name="year">
             <option value="">Year</option>
             <option value="2023">2023</option>
@@ -256,23 +286,60 @@ const char addPage[] PROGMEM = R"=====(
         <label for="chAcpt">
             <input type="checkbox" name="chAcpt" id="chAcpt"/> You agree to enter informationn </p> <br>
         </label>
-    <button class="send"onclick="checkDangky()">Send data</button>
+    <button class="send"onclick="checkDangky(),submitValue()">Send data</button>
     <button class="re" type="button" onclick="tai_lai_trang()">Retype</button>
 
 
     <div id="ketqua"></div>
     <script>
+        // đặt tên cây
+        function submitValue() {
+            var Tray = document.getElementById('tray').value;
+            
+            if  (Tray==="1"){
+                var input = document.getElementById('txtName');
+                var value = input.value;
+                
+                localStorage.setItem('name1', value);
+                window.location.href = 'flow.html';
+            }
+            else if (Tray==="2"){
+                var input = document.getElementById('txtName');
+                var value = input.value;
+                
+                localStorage.setItem('name2', value);
+                window.location.href = 'flow.html';
+            }
+            else if  (Tray==="3"){
+                var input = document.getElementById('txtName');
+                var value = input.value;
+                
+                localStorage.setItem('name3', value);
+                window.location.href = 'flow.html';
+            }
+            else if (Tray==="4"){
+                var input = document.getElementById('txtName');
+                var value = input.value;
+                
+                localStorage.setItem('name4', value);
+                window.location.href = 'flow.html';
+            }
+            
+        }
+        // in ra thông tin
         function checkDangky(){
             var name = document.getElementById("txtName").value;
             var accept = document.getElementById("chAcpt").checked;
             var temp = document.getElementById("txtTemp").value;
             var hum = document.getElementById("txtHum").value;
+            var Tray = document.getElementById("tray").value;
             var Day = document.getElementById("day").value;
             var Month = document.getElementById("month").value;
             var Year = document.getElementById("year").value;
             
-            document.getElementById("ketqua").innerHTML = 'Plant name: ' + name + '<br>Check: ' + accept  + "<br>Temp: " + temp +"<br>Hum: " + hum + "<br>Plating date: " + Day +" Month " + Month +" Year "+ Year;
-            
+            document.getElementById("ketqua").innerHTML = 'Entered information is:<br>' +'Plant name: ' + name + '<br>Check: ' + accept  + "<br>Temp: " + temp +"<br>Hum: " + hum + "<br>Number Tray: "+ Tray + "<br> Plating date: " + Day +" Month " + Month +" Year "+ Year;
+
+          //thông báo nhập thiếu
             if (name === "") {
                 alert("Please enter the NAME of the plant");
                 
@@ -293,7 +360,7 @@ const char addPage[] PROGMEM = R"=====(
                 alert("Please enter the YEAR");
             }
         }
-           //tên cây
+           // đổi khung tên cây
            function doico1(){
                 document.getElementById('txtName').style.color="black";
                 document.getElementById('txtName').style.fontSize="30px";
@@ -302,7 +369,7 @@ const char addPage[] PROGMEM = R"=====(
                 document.getElementById('txtName').style.color="red";
                 document.getElementById('txtName').style.fontSize="15px";
             }
-            //nhiệt
+            //đổi khung nhiệt
             function doico2(){
                 document.getElementById('txtTemp').style.color="black";
                 document.getElementById('txtTemp').style.fontSize="30px";
@@ -311,8 +378,7 @@ const char addPage[] PROGMEM = R"=====(
                 document.getElementById('txtTemp').style.color="red";
                 document.getElementById('txtTemp').style.fontSize="15px";
             }    
-            //ẩm
-            //
+            //đổi khung độ ẩm
             function doico3(){
                 document.getElementById('txtHum').style.color="black";
                 document.getElementById('txtHum').style.fontSize="30px";
@@ -338,27 +404,28 @@ const char tray1Page[] PROGMEM = R"=====(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tray 1</title>
+    <style>
+
+    </style>      
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <div class="container">
         <canvas id="myChart"></canvas>
-  
-    <p>Temperature: <span id="temperature"></span>&#8451;</p>
-    <p>Humidity: <span id="humidity"></span>%</p>
-    <p>Day: <span id="day"></span></p>
 
-
-
+        <p>Processing</p>  
+        <p>Temperature: <span id="temperature"></span>&#8451;</p>
+        <p>Humidity: <span id="humidity"></span>%</p>
+        <p>Day: <span id="day"></span></p>
     </div>
-    <script>
+    <script> 
       let tempData = 0;
       let humData = 0;
       let dayData = 0;
       
         let myChart = document.getElementById('myChart').getContext('2d');
-        // Global Options
+      
         Chart.defaults.global.defaultFontFamily = 'Lato';
         Chart.defaults.global.defaultFontSize = 18;
         Chart.defaults.global.defaultFontColor = '#777';
@@ -415,23 +482,24 @@ const char tray1Page[] PROGMEM = R"=====(
             }
           }
         });
-// Hàm để cập nhật biểu đồ
-function updateChart() {
-  // Cập nhật dữ liệu trong biểu đồ
-  massPopChart.data.datasets[0].data = [tempData, humData, dayData];
-  massPopChart.update();
-}
 
-// Đặt dữ liệu mới khi nhận được từ ESP8266
-function receiveDataFromESP(newTemp, newHum, newDay) {
-  tempData = newTemp;
-  humData = newHum;
-  dayData = newDay;
-  document.getElementById('temperature') = newTemp;
-  document.getElementById('humidity') = newHum;
-  document.getElementById('day') = newDay;
-  updateChart(); // Cập nhật biểu đồ với dữ liệu mới
-}
+        // Hàm để cập nhật biểu đồ
+        function updateChart() {
+          // Cập nhật dữ liệu trong biểu đồ
+          massPopChart.data.datasets[0].data = [tempData, humData, dayData];
+          massPopChart.update();
+        }
+
+        // Đặt dữ liệu mới khi nhận được từ ESP8266
+        function receiveDataFromESP(newTemp, newHum, newDay) {
+          tempData = newTemp;
+          humData = newHum;
+          dayData = newDay;
+          document.getElementById('temperature') = newTemp;
+          document.getElementById('humidity') = newHum;
+          document.getElementById('day') = newDay;
+          updateChart(); // Cập nhật biểu đồ với dữ liệu mới
+        }
 
       </script>
            
@@ -455,13 +523,11 @@ const char tray2Page[] PROGMEM = R"=====(
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <div class="container">
         <canvas id="myChart"></canvas>
-  
-    <p>Temperature: <span id="temperature"></span>&#8451;</p>
-    <p>Humidity: <span id="humidity"></span>%</p>
-    <p>Day: <span id="day"></span></p>
-
-
-
+      
+        <p>Processing</p>  
+        <p>Temperature: <span id="temperature"></span>&#8451;</p>
+        <p>Humidity: <span id="humidity"></span>%</p>
+        <p>Day: <span id="day"></span></p>
     </div>
     <script>
       let tempData = 0;
@@ -469,7 +535,7 @@ const char tray2Page[] PROGMEM = R"=====(
       let dayData = 0;
       
         let myChart = document.getElementById('myChart').getContext('2d');
-        // Global Options
+
         Chart.defaults.global.defaultFontFamily = 'Lato';
         Chart.defaults.global.defaultFontSize = 18;
         Chart.defaults.global.defaultFontColor = '#777';
@@ -526,23 +592,24 @@ const char tray2Page[] PROGMEM = R"=====(
             }
           }
         });
-// Hàm để cập nhật biểu đồ
-function updateChart() {
-  // Cập nhật dữ liệu trong biểu đồ
-  massPopChart.data.datasets[0].data = [tempData, humData, dayData];
-  massPopChart.update();
-}
 
-// Đặt dữ liệu mới khi nhận được từ ESP8266
-function receiveDataFromESP(newTemp, newHum, newDay) {
-  tempData = newTemp;
-  humData = newHum;
-  dayData = newDay;
-  document.getElementById('temperature') = newTemp;
-  document.getElementById('humidity') = newHum;
-  document.getElementById('day') = newDay;
-  updateChart(); // Cập nhật biểu đồ với dữ liệu mới
-}
+        // Hàm để cập nhật biểu đồ
+        function updateChart() {
+          // Cập nhật dữ liệu trong biểu đồ
+          massPopChart.data.datasets[0].data = [tempData, humData, dayData];
+          massPopChart.update();
+        }
+
+        // Đặt dữ liệu mới khi nhận được từ ESP8266
+        function receiveDataFromESP(newTemp, newHum, newDay) {
+          tempData = newTemp;
+          humData = newHum;
+          dayData = newDay;
+          document.getElementById('temperature') = newTemp;
+          document.getElementById('humidity') = newHum;
+          document.getElementById('day') = newDay;
+          updateChart(); // Cập nhật biểu đồ với dữ liệu mới
+        }
 
       </script>
            
@@ -567,12 +634,10 @@ const char tray3Page[] PROGMEM = R"=====(
     <div class="container">
         <canvas id="myChart"></canvas>
   
-    <p>Temperature: <span id="temperature"></span>&#8451;</p>
-    <p>Humidity: <span id="humidity"></span>%</p>
-    <p>Day: <span id="day"></span></p>
-
-
-
+        <p>Processing</p>  
+        <p>Temperature: <span id="temperature"></span>&#8451;</p>
+        <p>Humidity: <span id="humidity"></span>%</p>
+        <p>Day: <span id="day"></span></p>
     </div>
     <script>
       let tempData = 0;
@@ -580,7 +645,7 @@ const char tray3Page[] PROGMEM = R"=====(
       let dayData = 0;
       
         let myChart = document.getElementById('myChart').getContext('2d');
-        // Global Options
+
         Chart.defaults.global.defaultFontFamily = 'Lato';
         Chart.defaults.global.defaultFontSize = 18;
         Chart.defaults.global.defaultFontColor = '#777';
@@ -637,23 +702,24 @@ const char tray3Page[] PROGMEM = R"=====(
             }
           }
         });
-// Hàm để cập nhật biểu đồ
-function updateChart() {
-  // Cập nhật dữ liệu trong biểu đồ
-  massPopChart.data.datasets[0].data = [tempData, humData, dayData];
-  massPopChart.update();
-}
 
-// Đặt dữ liệu mới khi nhận được từ ESP8266
-function receiveDataFromESP(newTemp, newHum, newDay) {
-  tempData = newTemp;
-  humData = newHum;
-  dayData = newDay;
-  document.getElementById('temperature') = newTemp;
-  document.getElementById('humidity') = newHum;
-  document.getElementById('day') = newDay;
-  updateChart(); // Cập nhật biểu đồ với dữ liệu mới
-}
+          // Hàm để cập nhật biểu đồ
+          function updateChart() {
+            // Cập nhật dữ liệu trong biểu đồ
+            massPopChart.data.datasets[0].data = [tempData, humData, dayData];
+            massPopChart.update();
+          }
+
+          // Đặt dữ liệu mới khi nhận được từ ESP8266
+          function receiveDataFromESP(newTemp, newHum, newDay) {
+            tempData = newTemp;
+            humData = newHum;
+            dayData = newDay;
+            document.getElementById('temperature') = newTemp;
+            document.getElementById('humidity') = newHum;
+            document.getElementById('day') = newDay;
+            updateChart(); // Cập nhật biểu đồ với dữ liệu mới
+          }
 
       </script>
            
@@ -676,13 +742,11 @@ const char tray4Page[] PROGMEM = R"=====(
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <div class="container">
         <canvas id="myChart"></canvas>
-  
-    <p>Temperature: <span id="temperature"></span>&#8451;</p>
-    <p>Humidity: <span id="humidity"></span>%</p>
-    <p>Day: <span id="day"></span></p>
-
-
-
+      
+        <p>Processing</p>  
+        <p>Temperature: <span id="temperature"></span>&#8451;</p>
+        <p>Humidity: <span id="humidity"></span>%</p>
+        <p>Day: <span id="day"></span></p>
     </div>
     <script>
       let tempData = 0;
@@ -690,7 +754,7 @@ const char tray4Page[] PROGMEM = R"=====(
       let dayData = 0;
       
         let myChart = document.getElementById('myChart').getContext('2d');
-        // Global Options
+       
         Chart.defaults.global.defaultFontFamily = 'Lato';
         Chart.defaults.global.defaultFontSize = 18;
         Chart.defaults.global.defaultFontColor = '#777';
@@ -747,25 +811,26 @@ const char tray4Page[] PROGMEM = R"=====(
             }
           }
         });
-// Hàm để cập nhật biểu đồ
-function updateChart() {
-  // Cập nhật dữ liệu trong biểu đồ
-  massPopChart.data.datasets[0].data = [tempData, humData, dayData];
-  massPopChart.update();
-}
 
-// Đặt dữ liệu mới khi nhận được từ ESP8266
-function receiveDataFromESP(newTemp, newHum, newDay) {
-  tempData = newTemp;
-  humData = newHum;
-  dayData = newDay;
-  document.getElementById('temperature') = newTemp;
-  document.getElementById('humidity') = newHum;
-  document.getElementById('day') = newDay;
-  updateChart(); // Cập nhật biểu đồ với dữ liệu mới
-}
+        // Hàm để cập nhật biểu đồ
+        function updateChart() {
+          // Cập nhật dữ liệu trong biểu đồ
+          massPopChart.data.datasets[0].data = [tempData, humData, dayData];
+          massPopChart.update();
+        }
 
-      </script>
+        // Đặt dữ liệu mới khi nhận được từ ESP8266
+        function receiveDataFromESP(newTemp, newHum, newDay) {
+          tempData = newTemp;
+          humData = newHum;
+          dayData = newDay;
+          document.getElementById('temperature') = newTemp;
+          document.getElementById('humidity') = newHum;
+          document.getElementById('day') = newDay;
+          updateChart(); // Cập nhật biểu đồ với dữ liệu mới
+        }
+
+      </script> 
            
     
 
@@ -798,7 +863,7 @@ void setup(void) {
     String s = addPage;
     webServer.send(200, "text/html", s);
   });
-    webServer.on("/dataTray5.html", []() {
+    webServer.on("/dataTray1.html", []() {
     String s = tray1Page;
     webServer.send(200, "text/html", s);
   });
