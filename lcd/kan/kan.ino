@@ -1,16 +1,11 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
-//define I2C address......
 LiquidCrystal_I2C lcd(0x27,16,2);
-
 
 void setup() {
   lcd.init();
   lcd.backlight();
-
-
-
 }
 
 void loop() {
@@ -19,7 +14,5 @@ void loop() {
 
    lcd.setCursor(3,1);
    lcd.print("com/SevKan10");
-
-
 
 }
