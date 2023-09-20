@@ -18,10 +18,12 @@ void setup() {
 
 void loop() {
   display.clearDisplay();
-  display.setTextSize(1);
+  display.setTextSize(2);
   display.setTextColor(SSD1306_WHITE);
-  display.setCursor(0, 15);
-  display.println("Hello, world!");
+  display.setCursor(0, 0);
+  display.println("BPM 120");
+  display.println("");
+  display.println("60 Km/h");
   display.display();
   delay(1000); 
 }
