@@ -1,5 +1,4 @@
-String ADMIN = "0866207887";
-int button = 13;
+String ADMIN = "0332473716";
 void setup() {
 
   Serial.begin(9600);
@@ -13,7 +12,6 @@ void setup() {
   Serial2.println("AT+CMGL=\"REC UNREAD\"");
   delay(500);
 
-  pinMode(button, INPUT_PULLUP);
   while (Serial2.available()) {
     String inputString;
     while (Serial2.available()) { inputString = Serial2.readString(); }
@@ -21,12 +19,6 @@ void setup() {
     Serial.println(inputString);
   }
 
-}
-
-void loop() {
-  boolean state = digitalRead(button);
-  if (state == 0) {
-    Serial.println(state);
     Serial2.println("AT+CMGF=1");
     delay(500);
     Serial2.println("AT+CMGS=\"" + ADMIN + "\"\r");
@@ -42,6 +34,9 @@ void loop() {
     Serial2.print(F("ATH"));
     Serial2.print(F(";\r\n"));
     delay(500);
-  } else {
-  }
+}
+
+void loop() {
+
+
 }
