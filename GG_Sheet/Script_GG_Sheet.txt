@@ -1,0 +1,52 @@
+function doGet(e) { 
+  Logger.log(JSON.stringify(e));  // Xem thông số
+  var result = 'Ok'; // Giả sử thành công
+  if (e.parameter == 'undefined') {
+    result = 'Không có tham số';
+  }
+  else {
+    var sheet_id = '153MR8etbpLam4cMZ5b0TvAF0PDt-tSQVZk42yoWGhMA'; // ID Bảng tính
+    try {
+      var sheet = SpreadsheetApp.openById(sheet_id).getActiveSheet(); // Lấy trang tính hiện tại
+      var newRow = sheet.getLastRow() + 1;
+      var rowData = [];
+      var d = new Date();
+      rowData[0] = d; // Thời gian ở cột A
+      rowData[1] = d.toLocaleTimeString(); // Thời gian ở cột A
+    
+      for (var param in e.parameter) {
+        Logger.log('Trong vòng lặp for, param=' + param);
+        var value = stripQuotes(e.parameter[param]);
+        Logger.log(param + ':' + e.parameter[param]);
+        switch (param) {
+          case 'value1':
+            rowData[2] = value; // Giá trị ở cột A
+            result = 'Ghi vào cột A';
+            break;
+          case 'value2':
+            rowData[3] = value; // Giá trị ở cột B
+            result += ' Ghi vào cột B';
+            break;
+          case 'value3':
+            rowData[4] = value; // Giá trị ở cột C
+            result += ' Ghi vào cột C';
+            break;
+          default:
+            result = "Tham số không được hỗ trợ";
+        }
+      }
+      Logger.log(JSON.stringify(rowData));
+      // Ghi dòng mới ở dưới
+      var newRange = sheet.getRange(newRow, 1, 1, rowData.length);
+      newRange.setValues([rowData]);
+    } catch (error) {
+      result = "Lỗi: " + error.toString();
+    }
+  }
+  // Trả kết quả của hoạt động
+  return ContentService.createTextOutput(result);
+}
+
+function stripQuotes(value) {
+  return value.replace(/^["']|['"]$/g, "");
+}
