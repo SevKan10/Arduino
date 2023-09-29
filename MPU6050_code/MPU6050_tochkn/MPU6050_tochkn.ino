@@ -1,26 +1,44 @@
-#include <MPU6050_tockn.h>
 #include <Wire.h>
-#include <LiquidCrystal_I2C.h>
-#include <EEPROM.h>
-MPU6050 mpu6050(Wire);
+#include <MPU6050.h>
+
+MPU6050 mpu;
+
+int16_t gx, gy, gz; // Góc quay x, y, z (int16_t)
+
+// Khai báo biến tổng cho các góc
+float totalGx = 0;
+float totalGy = 0;
+float totalGz = 0;
+
 void setup() {
-  Serial.begin(9600);
   Wire.begin();
-  mpu6050.begin();
-  mpu6050.calcGyroOffsets(true);
- }
+  mpu.initialize();
+  Serial.begin(9600);
+  Serial.println(mpu.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+}
 
-void loop() 
-{
-
-  mpu6050.update();
-  float x= mpu6050.getAccX();
-  float y = mpu6050.getAccY();
-  float z = mpu6050.getAccZ();
+void loop() {
+  mpu.getRotation(&gx, &gy, &gz);
+  // Chuyển đổi góc từ giá trị int16_t sang đơn vị đo góc (độ) bằng cách chia cho 131.0
+  float angleX = gx / 131.0;
+  float angleY = gy / 131.0;
+  float angleZ = gz / 131.0;
   
-  Serial.print("x: "); Serial.print(x);
-  Serial.print("\ty: "); Serial.print(y);
-  Serial.print("\tz: "); Serial.println(z);
-  delay(500);
- 
+  // Cộng dồn các góc
+  totalGx += angleX;
+  totalGy += angleY;
+  totalGz += angleZ;
+
+  // In ra giá trị tổng của các góc
+  Serial.print("Total Angle X = ");
+  Serial.print(totalGx);
+  Serial.print(" degrees, ");
+  Serial.print("Total Angle Y = ");
+  Serial.print(totalGy);
+  Serial.print(" degrees, ");
+  Serial.print("Total Angle Z = ");
+  Serial.print(totalGz);
+  Serial.println(" degrees");
+
+  delay(100);
 }
