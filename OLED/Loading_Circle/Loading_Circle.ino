@@ -15,13 +15,13 @@ int centerY = 32;
 int numDots = 7;
 
 unsigned long Time;
-int button = 2;
+int button = 13;
 String ADMIN = "";
 int count = 6;
 void setup() {
   Serial.begin(9600);
   pinMode(button, INPUT_PULLUP);
-  Wire.begin();
+  Wire.begin(21, 19);
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println(F("Không tìm thấy màn hình OLED"));
     while (true)
@@ -39,10 +39,11 @@ void setup() {
 
   for (int i = 200; i >= 0; i--) {
     display.setTextSize(1);
-    display.setCursor(0, 0);
+      display.setCursor(0, 0);
     display.println("SMART HELMET BOOTING");
 
     for (int i = 0; i < numDots; i++) {
+      display.setTextSize(2);
       float dotAngle = radians(angle + i * 360.0 / numDots);
       int x = centerX + radius * cos(dotAngle);
       int y = centerY + radius * sin(dotAngle);
@@ -72,7 +73,7 @@ void setup() {
       display.setCursor(0, 10);
       display.println("Press ADMIN button");
       display.display();
-      delay(500); 
+      delay(500);
       if (digitalRead(button) == 0) {
         while (digitalRead(button) == 0) {
           count--;
@@ -90,7 +91,7 @@ void setup() {
             display.setCursor(23, 8);
             display.println("WELCOME");
             display.display();
-            delay(2000); // Hiển thị "WELCOME" trong 2 giây
+            delay(2000);  // Hiển thị "WELCOME" trong 2 giây
           }
         }
         if (digitalRead(button) == 1) { count = 6; }
