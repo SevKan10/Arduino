@@ -2,7 +2,7 @@
 
 void setup() {
   Serial.begin(9600);
-  Wire.begin();
+  Wire.begin(23,22);
   Serial.println("\nI2C Scanning...");
 }
 
