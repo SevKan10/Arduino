@@ -33,7 +33,7 @@ const unsigned char rate[] PROGMEM = {
   0xfc, 0xf3, 0xf0, 0xfe, 0x07, 0xf0, 0xff, 0x9f, 0xf0, 0xff, 0xff, 0xf0
 };
 void setup() {
-  Wire.begin(21,19);
+  Wire.begin(23,22);
   if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println(F("Không tìm thấy màn hình OLED"));
     while (true)
